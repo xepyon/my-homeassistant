@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:${HA_VERSION}
+    container_name: homeassistant
+    network_mode: host
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_DIR}:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro   # Optional: Bluetooth
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    #   - /dev/ttyACM0:/dev/ttyACM0
+
+  mariadb:
+    image: mariadb:11
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      - MARIADB_DATABASE=homeassistant
+      - MARIADB_USER=ha
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    volumes:
+      - ${MARIADB_DIR}:/var/lib/mysql
+    command: >
+      --innodb_buffer_pool_size=256M
+      --innodb_flush_log_at_trx_commit=1
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "ha", "-p${DB_PASSWORD}"]
+      interval: 20s
+      timeout: 5s
+      retries: 10

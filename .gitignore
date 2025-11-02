@@ -1,0 +1,9 @@
+.env
+*.sql
+*.tar*
+/scripts/backup.sh
+# Never commit runtime data:
+# /srv is outside repo, but just in case someone mirrors it here:
+config/
+mariadb/
+
