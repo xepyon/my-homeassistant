@@ -17,6 +17,11 @@ services:
     #   - /dev/ttyUSB0:/dev/ttyUSB0
     #   - /dev/ttyACM0:/dev/ttyACM0
 
+  matter-server:
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    network_mode: host
+    restart: unless-stopped
+
   mariadb:
     image: mariadb:11
     container_name: mariadb
