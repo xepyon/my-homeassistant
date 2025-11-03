@@ -1,0 +1,10 @@
+# Home Assistant recorder → MariaDB
+recorder:
+  db_url: mysql+pymysql://ha:!secret db_password@mariadb/homeassistant?charset=utf8mb4
+  purge_keep_days: 7
+  auto_purge: true
+  exclude:
+    domains:
+      - camera
+      - updater
+
