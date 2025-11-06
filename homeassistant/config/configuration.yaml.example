@@ -1,7 +1,8 @@
 # Home Assistant recorder → MariaDB
 # Use MariaDB for Recorder (history/logbook rely on this)
 recorder:
-  db_url: mysql://ha:${DB_PASSWORD}@mariadb:3306/homeassistant?charset=utf8mb4
+  # db_url: mysql://ha:${DB_PASSWORD}@mariadb:3306/homeassistant?charset=utf8mb4
+  db_url: mysql://ha:${DB_PASSWORD}@127.0.0.1:3306/homeassistant?charset=utf8mb4
   # Optional tuning:
   commit_interval: 1
   auto_purge: true
