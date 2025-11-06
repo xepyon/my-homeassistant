@@ -1,11 +1,14 @@
 # Home Assistant recorder → MariaDB
+# Use MariaDB for Recorder (history/logbook rely on this)
 recorder:
-  db_url: mysql+pymysql://ha:!secret db_password@mariadb/homeassistant?charset=utf8mb4
-  purge_keep_days: 7
+  db_url: mysql://ha:${DB_PASSWORD}@mariadb:3306/homeassistant?charset=utf8mb4
+  # Optional tuning:
+  commit_interval: 1
   auto_purge: true
-  exclude:
-    domains:
-      - camera
-      - updater
+  purge_keep_days: 14
+  # exclude:
+  #   domains:
+  #     - automation
+  #     - camera
 
 mobile_app:
