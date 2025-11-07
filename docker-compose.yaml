@@ -16,6 +16,8 @@ services:
     # devices:
     #   - /dev/ttyUSB0:/dev/ttyUSB0
     #   - /dev/ttyACM0:/dev/ttyACM0
+    ports:
+      - "8123:${HA_PORT:-8123}"
 
   # python-matter-server
   matter-server:
