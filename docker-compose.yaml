@@ -76,5 +76,7 @@ services:
       interval: 20s
       timeout: 5s
       retries: 10
+    ports:
+      - "${MARIADB_PORT:-3306}:3306"
     networks:
       - ha_net
