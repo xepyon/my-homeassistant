@@ -14,7 +14,7 @@ fi
 
 CONFIG_DIR="${CONFIG_DIR:-/srv/homeassistant/config}"
 MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
-MS_DATA_DIR=="${MS_DATA_DIR:-/srv/matter-server/data}"
+MS_DATA_DIR="${MS_DATA_DIR:-/srv/matter-server/data}"
 
 echo "==> Creating runtime directories (may prompt for sudo)..."
 sudo mkdir -p "$CONFIG_DIR" "$MARIADB_DIR" "$MS_DATA_DIR"
