@@ -59,6 +59,7 @@ echo
 echo "==> Summary"
 echo "  CONFIG_DIR : $CONFIG_DIR"
 echo "  MARIADB_DIR: $MARIADB_DIR"
+echo "  MS_DATA_DIR: $MS_DATA_DIR"
 echo "  configuration.yaml: $( [[ -f "$DST_CONF" ]] && echo present || echo missing )"
 echo "  secrets.yaml      : $( [[ -f "$DST_SECR" ]] && echo present || echo missing )"
 
