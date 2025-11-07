@@ -5,7 +5,7 @@ services:
     network_mode: host
     restart: unless-stopped
     depends_on:
-      "${MARIADB_CONTAINER_NAME:-mariadb}":
+      mariadb:
         condition: service_healthy
     environment:
       - TZ=${TZ}
