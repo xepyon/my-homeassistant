@@ -17,7 +17,7 @@ automation:
 
 device_automation:
 
-frontend: (the web UI)
+frontend:
 
 history:
 
