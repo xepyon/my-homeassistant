@@ -14,12 +14,13 @@ fi
 
 CONFIG_DIR="${CONFIG_DIR:-/srv/homeassistant/config}"
 MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
+MS_DATA_DIR=="${MS_DATA_DIR:-/srv/matter-server/data}"
 
 echo "==> Creating runtime directories (may prompt for sudo)..."
-sudo mkdir -p "$CONFIG_DIR" "$MARIADB_DIR"
+sudo mkdir -p "$CONFIG_DIR" "$MARIADB_DIR" "$MS_DATA_DIR"
 
 # Try to chown to current user (safe even if owned by root/docker)
-if sudo chown -R "$USER":"$USER" "$(dirname "$CONFIG_DIR")" "$MARIADB_DIR" 2>/dev/null; then
+if sudo chown -R "$USER":"$USER" "$(dirname "$CONFIG_DIR")" "$MARIADB_DIR" "$MS_DATA_DIR" 2>/dev/null; then
   echo "==> Ownership set to $USER"
 else
   echo "[INFO] Could not change ownership; continuing."

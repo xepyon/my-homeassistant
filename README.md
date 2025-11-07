@@ -119,4 +119,30 @@ The corresponding unit file is included in documentation examples.
 
 ---
 
+## DOCUMENTATION
+
+Home Assistant: https://www.home-assistant.io/docs/
+MariaDB: https://mariadb.com/kb/en/getting-started-with-mariadb/
+Docker Compose: https://docs.docker.com/compose/
+
+## DOCUMENTATION HOME ASSISTANT SERVERS
+
+### Python-matter-server
+
+Documentation: https://www.home-assistant.io/integrations/matter/
+Repository: https://github.com/matter-js/python-matter-server/blob/main/docs/docker.md
+Container: https://github.com/matter-js/python-matter-server/blob/main/docs/docker.md#running-matter-server-in-docker
+
+## DOCUMENTATION HOME ASSISTANT APPS
+
+### Home Assistant Companion App
+
+Documentation: https://www.home-assistant.io/integrations/mobile_app/
+Repository: https://github.com/home-assistant/core/tree/dev/homeassistant/components/mobile_app
+
+#### MOBILE APP TRACKING TROUBLESHOOTING
+
+https://companion.home-assistant.io/docs/troubleshooting/faqs/#starting-fresh-with-the-android-app
+https://community.home-assistant.io/t/enable-device-phone-tracking-after-setting-up-ha-app-android/445828/36
+
 **Enjoy your automated home — safe, reproducible, and easy to maintain!**
