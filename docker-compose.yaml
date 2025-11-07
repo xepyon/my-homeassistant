@@ -1,7 +1,7 @@
 services:
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:${HA_VERSION}
-    container_name: homeassistant
+    container_name: ${HA_CONTAINER_NAME:-homeassistant}
     network_mode: host
     restart: unless-stopped
     depends_on:
@@ -20,7 +20,7 @@ services:
   # python-matter-server
   matter-server:
     image: ghcr.io/matter-js/python-matter-server:stable
-    container_name: matter-server
+    container_name: ${MS_CONTAINER_NAME:-matter-server}
     restart: unless-stopped
     # Required for mDNS to work correctly
     network_mode: host
@@ -43,7 +43,7 @@ services:
 #
   mariadb:
     image: mariadb:11
-    container_name: mariadb
+    container_name: ${MARIADB_CONTAINER_NAME:-mariadb}
     restart: unless-stopped
     ports:
       - "3306:3306"
