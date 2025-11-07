@@ -13,14 +13,40 @@ recorder:
   #     - automation
   #     - camera
 
+automation:
+
+device_automation:
+
+frontend: (the web UI)
+
+history:
+
+logbook:
+
+map:
+
 mobile_app:
 
-sun:
+person:
 
-thread:
+scene:
+
+script:
+
+ssdp:
+
+sun: 
+
+system_health:
+
+timer:
+
+updater:
+
+webhook:
 
 zeroconf:
 
-config:
-
 dhcp:
+
+energy:
