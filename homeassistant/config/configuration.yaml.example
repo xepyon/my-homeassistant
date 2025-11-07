@@ -19,4 +19,8 @@ sun:
 
 thread:
 
-mqtt:
+zeroconf:
+
+config:
+
+dhcp:
