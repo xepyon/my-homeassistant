@@ -55,6 +55,28 @@ else
   echo "[OK] $DST_SECR already exists (leaving as is)."
 fi
 
+# ... after loading .env
+DB_HOST="127.0.0.1"   # or "${MARIADB_CONTAINER_NAME:-mariadb}" if both are on same bridge network
+RECORDER_DB_URL="mysql://ha:${DB_PASSWORD}@${DB_HOST}:3306/homeassistant?charset=utf8mb4"
+
+if [[ ! -f "$DST_SECR" ]]; then
+  cat > "$DST_SECR" <<EOF
+db_password: ${DB_PASSWORD:-$ENV_DB_PASS}
+recorder_db_url: ${RECORDER_DB_URL}
+EOF
+else
+  # update/ensure keys exist without clobbering others
+  awk -v url="$RECORDER_DB_URL" -v pass="${DB_PASSWORD:-$ENV_DB_PASS}" '
+    BEGIN{found1=found2=0}
+    /^db_password:/ {print "db_password: " pass; found1=1; next}
+    /^recorder_db_url:/ {print "recorder_db_url: " url; found2=1; next}
+    {print}
+    END{
+      if(!found1) print "db_password: " pass
+      if(!found2) print "recorder_db_url: " url
+    }' "$DST_SECR" > "$DST_SECR.tmp" && mv "$DST_SECR.tmp" "$DST_SECR"
+fi
+
 echo
 echo "==> Summary"
 echo "  CONFIG_DIR : $CONFIG_DIR"
