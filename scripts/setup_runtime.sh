@@ -56,8 +56,8 @@ else
 fi
 
 # ... after loading .env
-DB_HOST="127.0.0.1"   # or "${MARIADB_CONTAINER_NAME:-mariadb}" if both are on same bridge network
-RECORDER_DB_URL="mysql://ha:${DB_PASSWORD}@${DB_HOST}:3306/homeassistant?charset=utf8mb4"
+DB_HOST="${MARIADB_CONTAINER_NAME:-mariadb}"   # or "${MARIADB_CONTAINER_NAME:-mariadb}" if both are on same bridge network
+RECORDER_DB_URL="mysql://ha:${DB_PASSWORD}@${MARIADB_CONTAINER_NAME:-mariadb}:3306/homeassistant?charset=utf8mb4"
 
 if [[ ! -f "$DST_SECR" ]]; then
   cat > "$DST_SECR" <<EOF
