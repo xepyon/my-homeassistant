@@ -13,6 +13,8 @@ recorder:
   #     - automation
   #     - camera
 
+mqtt:
+
 automation:
 
 device_automation:

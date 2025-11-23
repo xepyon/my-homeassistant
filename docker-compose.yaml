@@ -8,7 +8,7 @@ services:
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:${HA_VERSION}
     container_name: ${HA_CONTAINER_NAME:-homeassistant}
-    # network_mode: host
+    network_mode: host
     restart: unless-stopped
     depends_on:
       mariadb:
@@ -24,8 +24,6 @@ services:
     #   - /dev/ttyACM0:/dev/ttyACM0
     ports:
       - "${HA_PORT:-8123}:8123"
-    networks:
-      - ha_net
 
   # python-matter-server
   matter-server:
@@ -46,7 +44,36 @@ services:
     #command: --storage-path /data --paa-root-cert-dir /data/credentials --bluetooth-adapter 0
     networks:
       - ha_net
+    ports:
+      - "127.0.0.1:5580:5580"
 
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:latest
+    restart: unless-stopped
+    volumes:
+      - ${Z2M_DATA_DIR:-$HOME}/srv/zigbee2mqtt:/app/data
+    environment:
+      - TZ=${TZ}
+    networks:
+      - ha_net
+    ports:
+      - "127.0.0.1:8080:8080"
+
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    volumes:
+      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/config:/mosquitto/config
+      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/data:/mosquitto/data
+      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/log:/mosquitto/log
+    ports:
+      - "127.0.0.1:1883:1883"
+      - "127.0.0.1:9001:9001"
+    restart: unless-stopped
+    networks:
+      - ha_net
 
 #  matter-server:
 #    image: ghcr.io/home-assistant-libs/python-matter-server:stable
@@ -77,6 +104,6 @@ services:
       timeout: 5s
       retries: 10
     ports:
-      - "${MARIADB_PORT:-3306}:3306"
+      - "127.0.0.1:3306:3306"
     networks:
       - ha_net

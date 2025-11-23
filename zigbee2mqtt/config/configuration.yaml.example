@@ -1,0 +1,20 @@
+homeassistant: true
+permit_join: true
+
+mqtt:
+  server: mqtt://mosquitto:1883     # talks to the mosquitto container on ha_net
+  base_topic: zigbee2mqtt
+
+serial:
+  port: tcp://192.168.3.129:6638   # replace with your TCP bridge
+  baudrate: 115200
+  adapter: ezsp                     # typical for ZBBridge-style devices
+
+frontend:
+  port: 8080
+
+advanced:
+  pan_id: GENERATE
+  ext_pan_id: GENERATE
+  network_key: GENERATE
+  log_level: info
