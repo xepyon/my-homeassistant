@@ -16,7 +16,7 @@ services:
     environment:
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_DIR}:/config
+      - ${CONFIG_DIR}/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro   # Optional: Bluetooth
     # devices:
