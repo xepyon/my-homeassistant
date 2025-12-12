@@ -53,7 +53,7 @@ services:
     image: koenkk/zigbee2mqtt:latest
     restart: unless-stopped
     volumes:
-      - ${Z2M_DATA_DIR:-$HOME}/srv/zigbee2mqtt:/app/data
+      - ${Z2M_DATA_DIR:-$HOME}:/app/data
     environment:
       - TZ=${TZ}
     networks:
