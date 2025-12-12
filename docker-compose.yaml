@@ -37,7 +37,7 @@ services:
     #  - apparmor:unconfined
     volumes:
       # Create an .env file that sets the USERDIR environment variable.
-      - ${MS_DATA_DIR:-$HOME}/srv/matter-server/data:/data/
+      - ${MS_DATA_DIR:-$HOME}/data:/data/
       # Required for Bluetooth via D-Bus
       # - /run/dbus:/run/dbus:ro
     # If you adjust command line, make sure to pass the default CMD arguments too:
