@@ -66,9 +66,9 @@ services:
     container_name: mosquitto
     image: eclipse-mosquitto:latest
     volumes:
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/config:/mosquitto/config
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/data:/mosquitto/data
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/log:/mosquitto/log
+      - ${MQ_DATA_DIR:-$HOME}/config:/mosquitto/config
+      - ${MQ_DATA_DIR:-$HOME}/data:/mosquitto/data
+      - ${MQ_DATA_DIR:-$HOME}/log:/mosquitto/log
     ports:
       - "127.0.0.1:1883:1883"
       - "127.0.0.1:9001:9001"
