@@ -16,7 +16,7 @@ services:
     environment:
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_DIR}:/config
+      - ${CONFIG_DIR}/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro   # Optional: Bluetooth
     # devices:
@@ -37,7 +37,7 @@ services:
     #  - apparmor:unconfined
     volumes:
       # Create an .env file that sets the USERDIR environment variable.
-      - ${MS_DATA_DIR:-$HOME}/srv/matter-server/data:/data/
+      - ${MS_DATA_DIR:-$HOME}/data:/data/
       # Required for Bluetooth via D-Bus
       # - /run/dbus:/run/dbus:ro
     # If you adjust command line, make sure to pass the default CMD arguments too:
@@ -53,7 +53,7 @@ services:
     image: koenkk/zigbee2mqtt:latest
     restart: unless-stopped
     volumes:
-      - ${Z2M_DATA_DIR:-$HOME}/srv/zigbee2mqtt:/app/data
+      - ${Z2M_DATA_DIR:-$HOME}:/app/data
     environment:
       - TZ=${TZ}
     networks:
@@ -66,9 +66,9 @@ services:
     container_name: mosquitto
     image: eclipse-mosquitto:latest
     volumes:
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/config:/mosquitto/config
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/data:/mosquitto/data
-      - ${MQ_DATA_DIR:-$HOME}/srv/mosquitto/log:/mosquitto/log
+      - ${MQ_DATA_DIR:-$HOME}/config:/mosquitto/config
+      - ${MQ_DATA_DIR:-$HOME}/data:/mosquitto/data
+      - ${MQ_DATA_DIR:-$HOME}/log:/mosquitto/log
     ports:
       - "127.0.0.1:1883:1883"
       - "127.0.0.1:9001:9001"
