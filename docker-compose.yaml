@@ -42,10 +42,11 @@ services:
       # - /run/dbus:/run/dbus:ro
     # If you adjust command line, make sure to pass the default CMD arguments too:
     #command: --storage-path /data --paa-root-cert-dir /data/credentials --bluetooth-adapter 0
-    networks:
-      - ha_net
-    ports:
-      - "127.0.0.1:5580:5580"
+    #networks:
+    #  - ha_net
+    #ports:
+    #  - "127.0.0.1:5580:5580"
+    network_mode: host
 
   zigbee2mqtt:
     container_name: zigbee2mqtt

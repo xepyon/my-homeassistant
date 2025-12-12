@@ -146,3 +146,89 @@ https://companion.home-assistant.io/docs/troubleshooting/faqs/#starting-fresh-wi
 https://community.home-assistant.io/t/enable-device-phone-tracking-after-setting-up-ha-app-android/445828/36
 
 **Enjoy your automated home — safe, reproducible, and easy to maintain!**
+
+
+# APPS
+
+## HOMEKIT
+
+------------------------------------------------------------------------
+
+# 1. Ubuntu Host (Home Assistant Container) Checks
+
+## ✔️ 1.1 Confirm Home Assistant is running in host mode
+
+``` bash
+docker inspect homeassistant --format '{{ .HostConfig.NetworkMode }}'
+```
+
+## ✔️ 1.2 Check HomeKit Bridge port is listening
+
+``` bash
+sudo ss -tulnp | grep 21064
+```
+
+## ✔️ 1.3 Confirm firewall is not blocking anything
+
+``` bash
+sudo ufw status
+```
+
+## ✔️ 1.4 Test port connectivity from another LAN device
+
+``` bash
+nc -vz <ubuntu-ip> 21064
+```
+
+## ✔️ 1.5 Check mDNS visibility (optional)
+
+``` bash
+dns-sd -B _hap._tcp
+```
+
+------------------------------------------------------------------------
+
+# 2. ASUS ZenWiFi (AP Mode) Configuration Checklist
+
+## 2.1 Wireless → Professional (per band)
+
+Settings: - Enable IGMP Snooping: **Disable** - Set AP Isolated:
+**No** - Airtime Fairness: **Disable** - Multicast Rate: Auto - WMM:
+
+OPTIONAL -> Enable - Roaming Assistant: Disable -> THIS ONE IS UNNECESSARY, that is why commented
+
+------------------------------------------------------------------------
+
+# 2.2 AP Mode Limitations
+
+ASUS ZenWiFi AP mode **does not forward multicast (mDNS)** from wired →
+Wi-Fi.
+
+Symptoms: - HomeKit Bridge not discoverable - AirPlay/Chromecast
+discovery issues
+
+------------------------------------------------------------------------
+
+# 2.3 Fixes
+
+## ✔️ Fix A: Switch to Router Mode or AiMesh Router Mode
+
+Path: **Administration → Operation Mode → Wireless router mode**
+
+## ✔️ Fix B: Media Bridge Mode
+
+(if available)
+
+## ✔️ Fix C: Connect iPad to main router's Wi-Fi
+
+Tests if ASUS AP is blocking mDNS.
+
+------------------------------------------------------------------------
+
+# 3. Final Pairing Steps
+
+1.  Reboot ASUS
+2.  Restart HA container
+3.  iPad Wi-Fi OFF → ON
+4.  Home → Add Accessory → More Options
+
