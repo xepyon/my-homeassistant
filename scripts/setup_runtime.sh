@@ -12,6 +12,13 @@ else
   set -a; source .env.example; set +a
 fi
 
+# ROOT DIR MUST BE DEFINED IN .env
+if [[ -z "${ROOT_HA_DIR:-}" ]]; then
+  echo "[ERROR] ROOT_HA_DIR is not defined in .env. Please set it before proceeding."
+  echo "This directory is vital to enable proper privileges to the user"
+  exit 1
+fi
+
 CONFIG_DIR="${CONFIG_DIR:-/srv/homeassistant/config}"
 MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
 MS_DATA_DIR="${MS_DATA_DIR:-/srv/matter-server/data}"
