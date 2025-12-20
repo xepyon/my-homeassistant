@@ -19,6 +19,13 @@ if [[ -z "${ROOT_HA_DIR:-}" ]]; then
   exit 1
 fi
 
+# Create ROOT_HA_DIR if missing and ensure ownership for the USER
+if [[ ! -d "$ROOT_HA_DIR" ]]; then
+  echo "==> Creating ROOT_HA_DIR at $ROOT_HA_DIR (may prompt for sudo)..."
+  sudo mkdir -p "$ROOT_HA_DIR"
+  sudo chown "$USER":"$USER" "$ROOT_HA_DIR"
+fi
+
 CONFIG_DIR="${CONFIG_DIR:-/srv/homeassistant/config}"
 MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
 MS_DATA_DIR="${MS_DATA_DIR:-/srv/matter-server/data}"
