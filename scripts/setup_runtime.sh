@@ -17,24 +17,24 @@ MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
 MS_DATA_DIR="${MS_DATA_DIR:-/srv/matter-server/data}"
 
 # New: Mosquitto & Zigbee2MQTT config dirs (override in .env if you like)
-MOSQUITTO_CONFIG_DIR="${MOSQUITTO_CONFIG_DIR:-$PWD/mosquitto/config}"
-Z2M_CONFIG_DIR="${Z2M_CONFIG_DIR:-$PWD/zigbee2mqtt/config}"
+MQ_DATA_DIR="${MQ_DATA_DIR:-$PWD/mosquitto/config}"
+Z2M_DATA_DIR="${Z2M_DATA_DIR:-$PWD/zigbee2mqtt/config}"
 
 echo "==> Creating runtime directories (may prompt for sudo)..."
 sudo mkdir -p \
   "$CONFIG_DIR" \
   "$MARIADB_DIR" \
   "$MS_DATA_DIR" \
-  "$MOSQUITTO_CONFIG_DIR" \
-  "$Z2M_CONFIG_DIR"
+  "$MQ_DATA_DIR" \
+  "$Z2M_DATA_DIR"
 
 # Try to chown to current user (safe even if owned by root/docker)
 if sudo chown -R "$USER":"$USER" \
   "$(dirname "$CONFIG_DIR")" \
   "$MARIADB_DIR" \
   "$MS_DATA_DIR" \
-  "$MOSQUITTO_CONFIG_DIR" \
-  "$Z2M_CONFIG_DIR" 2>/dev/null; then
+  "$MQ_DATA_DIR" \
+  "$Z2M_DATA_DIR" 2>/dev/null; then
   echo "==> Ownership set to $USER"
 else
   echo "[INFO] Could not change ownership; continuing."
@@ -95,7 +95,7 @@ fi
 # Mosquitto example config
 ########################################
 EX_MOSQ_CONF="mosquitto/config/mosquitto.conf.example"
-DST_MOSQ_CONF="$MOSQUITTO_CONFIG_DIR/mosquitto.conf"
+DST_MOSQ_CONF="$MQ_DATA_DIR/mosquitto.conf"
 
 if [[ -f "$EX_MOSQ_CONF" ]]; then
   if [[ ! -f "$DST_MOSQ_CONF" ]]; then
@@ -112,7 +112,7 @@ fi
 # Zigbee2MQTT example config
 ########################################
 EX_Z2M_CONF="zigbee2mqtt/config/configuration.yaml.example"
-DST_Z2M_CONF="$Z2M_CONFIG_DIR/configuration.yaml"
+DST_Z2M_CONF="$Z2M_DATA_DIR/configuration.yaml"
 
 if [[ -f "$EX_Z2M_CONF" ]]; then
   if [[ ! -f "$DST_Z2M_CONF" ]]; then
@@ -130,8 +130,8 @@ echo "==> Summary"
 echo "  CONFIG_DIR         : $CONFIG_DIR"
 echo "  MARIADB_DIR        : $MARIADB_DIR"
 echo "  MS_DATA_DIR        : $MS_DATA_DIR"
-echo "  MOSQUITTO_CONFIG_DIR: $MOSQUITTO_CONFIG_DIR"
-echo "  Z2M_CONFIG_DIR     : $Z2M_CONFIG_DIR"
+echo "  MQ_DATA_DIR: $MQ_DATA_DIR"
+echo "  Z2M_DATA_DIR     : $Z2M_DATA_DIR"
 echo "  configuration.yaml (HA): $( [[ -f "$DST_CONF" ]] && echo present || echo missing )"
 echo "  secrets.yaml (HA)      : $( [[ -f "$DST_SECR" ]] && echo present || echo missing )"
 echo "  mosquitto.conf         : $( [[ -f "$DST_MOSQ_CONF" ]] && echo present || echo missing )"
