@@ -12,18 +12,28 @@ else
   set -a; source .env.example; set +a
 fi
 
-CONFIG_DIR="${CONFIG_DIR:-/srv/homeassistant/config}"
-MARIADB_DIR="${MARIADB_DIR:-/srv/mariadb}"
-MS_DATA_DIR="${MS_DATA_DIR:-/srv/matter-server/data}"
-
-echo "==> Creating runtime directories (may prompt for sudo)..."
-sudo mkdir -p "$CONFIG_DIR" "$MARIADB_DIR" "$MS_DATA_DIR"
-
-# Try to chown to current user (safe even if owned by root/docker)
-if sudo chown -R "$USER":"$USER" "$(dirname "$CONFIG_DIR")" "$MARIADB_DIR" "$MS_DATA_DIR" 2>/dev/null; then
-  echo "==> Ownership set to $USER"
+# Setup runtime directories based on environment
+if [[ -z "$1" == "dev" ]]; then
+  echo "==> Setting up runtime directories for DEVELOPMENT environment"
+  sudo mkdir -p /srv/ha/dev
+  sudo chown "$USER":"$USER" /srv/ha/dev
+  CONFIG_DIR="${CONFIG_DIR:-/srv/ha/dev/homeassistant/config}"
+  MARIADB_DIR="${MARIADB_DIR:-/srv/ha/dev/mariadb}"
+  MS_DATA_DIR="${MS_DATA_DIR:-/srv/ha/dev/matter-server/data}"
+  MOSQUITTO_DIR="${MOSQUITTO_DIR:-/srv/ha/dev/mosquitto/data}"
+  ZIGBEE2MQTT_DIR="${ZIGBEE2MQTT_DIR:-/srv/ha/dev/zigbee2mqtt/data}"
+elif [[ -z "$1" == "prod" ]]; then
+  echo "==> Setting up runtime directories for PRODUCTION environment"
+  sudo mkdir -p /srv/ha/prod
+  sudo chown "$USER":"$USER" /srv/ha/prod
+  CONFIG_DIR="${CONFIG_DIR:-/srv/ha/prod/homeassistant/config}"
+  MARIADB_DIR="${MARIADB_DIR:-/srv/ha/prod/mariadb}"
+  MS_DATA_DIR="${MS_DATA_DIR:-/srv/ha/prod/matter-server/data}"
+  MOSQUITTO_DIR="${MOSQUITTO_DIR:-/srv/ha/dev/mosquitto/data}"
+  ZIGBEE2MQTT_DIR="${ZIGBEE2MQTT_DIR:-/srv/ha/dev/zigbee2mqtt/data}"
 else
-  echo "[INFO] Could not change ownership; continuing."
+  echo "==> Could not determine environment (dev/prod). Please specify as first argument."
+  exit 1
 fi
 
 # Copy example configs if missing
