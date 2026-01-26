@@ -69,3 +69,10 @@ serial:
 ```
       {"created_at":"2025-11-22T16:43:41.433429+00:00","data":{"device":{"baudrate":115200,"flow_control":"software","path":"socket://192.168.20.246:6638"},"radio_type":"ezsp"},"disabled_by":"user","discovery_keys":{},"domain":"zha","entry_id":"01KAP76BZSN1WFTZY5BMY9KTW2","minor_version":1,"modified_at":"2025-11-22T16:43:41.433430+00:00","options":{},"pref_disable_new_entities":false,"pref_disable_polling":false,"source":"user","subentries":[],"title":"socket://192.168.3.129:6638","unique_id":"epid=34:99:62:b8:3d:63:5b:60","version":5},
 ```
+
+### Zigbee BUG
+
+The bridge stopped working while away, unsure why. All devices stopped updating under server zigbee2mqtt, but still being shown without updating any changes in the homeassistant dashboard.
+Tried rebooting and resetting the zigbee2mqtt bridge without success. In addition tried the same recovering old home assistant backups without success.
+
+Finally and sadly to solve the problem I had to re add all the zigbee devices from scratch resetting them one by one and adding them again to the zigbee2mqtt bridge. Not all were bad news, the home assistant detected all naming and devices ID so no reconfig was necessary, just re adding them to the zigbee2mqtt bridge.
