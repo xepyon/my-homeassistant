@@ -6,7 +6,7 @@ mqtt:
   base_topic: zigbee2mqtt
 
 serial:
-  port: tcp://192.168.3.129:6638   # replace with your TCP bridge
+  port: tcp://192.168.20.246:6638   # replace with your TCP bridge
   baudrate: 115200
   adapter: ezsp                     # typical for ZBBridge-style devices
 

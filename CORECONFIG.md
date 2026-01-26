@@ -1,6 +1,33 @@
 # CORECONFIG
 
-## Zigbee configuration
+## Important core config related to homeassistant and other container servers used
+
+### Home Assistant configuration locations in container volumes
+
+```
+/srv/ha/dev/homeassistant/config/configuration.yaml
+/srv/ha/dev/homeassistant/config/.storage/core.config_entries
+```
+
+### zigbee2mqtt configuration location in container volumes
+
+```
+/srv/ha/dev/zigbee2mqtt/configuration.yaml
+```
+
+
+### zigbe2mqtt bridge initial conf and backup
+
+- Reset zigbee2mqtt bridge to factory settings
+- Connect to zigbee brige wifi network for initial conf ZB-xxx
+- Access to web interface under 192.168.4.1
+- Configure 2.4ghz wifi network with vlan 20 access and save the ip address assigned to the zigbee2mqtt bridge
+- Connect to default network and access to the zigbee2mqtt web interface provided above
+- In ha core.config_entries edit the zigbee2mqtt bridge ip address to the new one assigned in vlan 20 if necessary OR configure it manually using ha web interface -> settings -> devices & services -> integrations -> add integration -> zigbee home automation -> Adapter type: ezsp ; Serial device path: tcp://192.168.20.246:6638 (replace with your TCP bridge) ; Serial port speed 115200 ; Serial port flow control: none -> I have created backup mentioned below, unsure if going to work.
+
+Backup of the zigbee2mqtt configuration after changing vlan done under truneas-scale03.nico.com/container/ha/zigbee/bridge/Config_ZBbridge_Initial_conf_20iot.dmp
+
+## Zigbee configuration advanced
 
 The initial zigbee configuration was done in vlan 3.
 

@@ -2,6 +2,10 @@
 
 A simple and production-ready Docker Compose setup for **Home Assistant** with **MariaDB** as the recorder database.
 
+## Other documentation location
+
+[CORECONFIG.md](CORECONFIG.md) - Core configuration changes for zigbee2mqtt after network changes.
+
 ---
 
 ## 📦 Overview
